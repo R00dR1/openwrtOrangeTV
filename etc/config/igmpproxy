@@ -1,0 +1,30 @@
+config igmpproxy
+    option quickleave 1
+
+config phyint
+    option network lanTV
+    option zone lanTV
+    option direction downstream
+    list altnet 192.168.40.0/30
+
+config phyint
+    option network IPTV
+    option zone IPTV
+    option direction downstream
+    list altnet 192.168.40.0/30
+
+config phyint
+    option network wan
+    option zone wan
+    option direction upstream
+    list altnet 192.168.40.0/30
+
+config mfc
+    option disabled 1
+    list group 232.48.190.2
+    list source 95.58.250.160
+    option upstream-interface IPTV
+
+config mfc
+    option disabled 1
+    list group 239.255.255.25

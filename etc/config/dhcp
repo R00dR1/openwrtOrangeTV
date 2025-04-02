@@ -1,0 +1,51 @@
+
+config dnsmasq
+	option domainneeded '1'
+	option localise_queries '1'
+	option rebind_protection '1'
+	option rebind_localhost '1'
+	option local '/lan/'
+	option domain 'lan'
+	option expandhosts '1'
+	option cachesize '1000'
+	option authoritative '1'
+	option readethers '1'
+	option leasefile '/tmp/dhcp.leases'
+	option resolvfile '/tmp/resolv.conf.d/resolv.conf.auto'
+	option localservice '1'
+	option ednspacket_max '1232'
+
+config dhcp 'lan'
+	option interface 'lan'
+	option start '2'
+	option limit '98'
+	option leasetime '12h'
+	option dhcpv4 'server'
+	list dhcp_option '6,94.140.14.14,1.1.1.1'
+
+config dhcp 'wan'
+	option interface 'wan'
+	option ignore '1'
+
+config odhcpd 'odhcpd'
+	option maindhcp '0'
+	option leasefile '/tmp/hosts/odhcpd'
+	option leasetrigger '/usr/sbin/odhcpd-update'
+	option loglevel '4'
+
+config dhcp 'lanTV'
+	option interface 'lanTV'
+	option start '3'
+	option limit '4'
+	option leasetime '12h'
+#        list dhcp_option '6,62.37.228.20,62.36.225.15'  #DNS Orange
+        list dhcp_option '6,87.216.1.65,87.216.1.66'  #DNS Jazztel
+
+
+config host
+	list mac 'XX:XX:XX:XX:XX:XX'  # MAC de tu deco
+	option ip '192.168.40.2'
+	option name 'deco-iptv'
+	option leasetime '1h'
+	option clientid '1:XX:XX:XX:XX:XX:XX'
+

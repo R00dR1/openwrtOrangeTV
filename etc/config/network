@@ -1,0 +1,75 @@
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd13:8bf8:cbfe::/48'
+	option packet_steering '1'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	option igmp_snooping '1'
+	list ports 'eth0'
+	list ports 'eth1'
+	list ports 'eth2'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config interface 'wan'
+	option device 'eth5.1074'
+	option proto 'dhcp'
+
+config interface 'wan6'
+	option device 'eth5.1074'
+	option proto 'dhcpv6'
+	option disabled '1'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+	option norelease '1'
+
+config interface 'SPF'
+	option proto 'static'
+	option device 'eth5'
+	option ipaddr '192.169.1.100'
+	option netmask '255.255.255.0'
+
+config device
+	option type '8021q'
+	option ifname 'eth5'
+	option vid '1074'
+	option name 'eth5.1074'
+
+config device
+	option type '8021q'
+	option ifname 'eth5'
+	option vid '838'
+	option name 'eth5.838'
+	list ingress_qos_mapping '4:4'
+	list egress_qos_mapping '4:4'
+
+config interface 'IPTV'
+	option proto 'none'
+	option device 'eth5.838'
+
+config device
+	option type 'bridge'
+	option name 'br-TV'
+	list ports 'eth3'
+	list ports 'eth4'
+	list ports 'eth5.838'
+
+config interface 'lanTV'
+	option proto 'static'
+	option device 'br-TV'
+	option ipaddr '192.168.40.1'
+	option netmask '255.255.255.248'
+
